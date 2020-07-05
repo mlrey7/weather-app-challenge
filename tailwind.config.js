@@ -32,6 +32,15 @@ module.exports = {
         yellow: {
           "500": "#FFEC65"
         }
+      },
+      opacity: {
+        "5": ".05"
+      },
+      inset: {
+        "1/5": "20%"
+      },
+      fontSize: {
+        "9xl": "9rem"
       }
     }
   },

@@ -1,10 +1,10 @@
 <template>
-  <div class="w-40 mx-auto flex flex-col p-5 bg-blue-500 items-center">
+  <div class="w-40 flex flex-col p-5 bg-blue-500 items-center">
     <h5 class="font-sans text-base text-white" data-test="date">{{actualDate}}</h5>
     <div class="flex-shrink-0 mt-1">
       <img :src="require(`@/assets/images/${image}`)" alt="Clear" class="w-20 h-auto" />
     </div>
-    <div class="mt-8">
+    <div class="mt-8 flex flex-row justify-between">
       <span class="font-sans text-base text-white" data-test="maxtemp">{{displayedMaxTemp}}</span>
       <span class="font-sans text-base text-gray-500" data-test="mintemp">{{displayedMinTemp}}</span>
     </div>

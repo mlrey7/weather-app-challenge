@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-xs mx-auto flex flex-col p-5 bg-blue-500 items-center">
+  <div class="flex flex-col p-5 bg-blue-500 items-center">
     <h1 class="font-sans text-base text-white">Visibility</h1>
     <div>
       <span
