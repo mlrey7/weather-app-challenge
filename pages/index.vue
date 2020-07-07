@@ -1,18 +1,16 @@
 <template>
   <div class>
-    <div class="grid grid-cols-12 gap-8 min-h-screen">
-      <transition name="fade" mode="out-in">
-        <component
-          :is="search ? 'SearchSideBar' : 'DefaultSideBar'"
-          v-bind="sideBarProps"
-          @search-start="search = true"
-          @search-exit="search = false"
-          @change-city="changeCity"
-          @get-user-location="getUserLocation"
-        />
-      </transition>
+    <div class="sm:grid sm:grid-cols-12 sm:gap-8 sm:min-h-screen">
+      <component
+        :is="search ? 'SearchSideBar' : 'DefaultSideBar'"
+        v-bind="sideBarProps"
+        @search-start="search = true"
+        @search-exit="search = false"
+        @change-city="changeCity"
+        @get-user-location="getUserLocation"
+      />
       <div class="col-start-5 col-span-7 p-10">
-        <div class="flex flex-row justify-end mb-16">
+        <div class="hidden sm:flex sm:flex-row justify-end mb-16">
           <button
             class="rounded-full w-10 h-10 flex items-center justify-center focus:outline-none mr-2 font-sans text-lg font-bold"
             @click.prevent="fahrenheitToggle = false"
@@ -24,7 +22,7 @@
             :class="fahrenheitToggle ? 'bg-white text-blue-700' : 'bg-blue-400 text-white'"
           >°F</button>
         </div>
-        <div class="flex flex-row justify-between">
+        <div class="grid grid-cols-2 gap-8 sm:flex sm:flex-row sm:justify-between">
           <DayWeather
             :date="weather.applicable_date"
             :weatherStateName="weather.weather_state_name"
@@ -37,7 +35,7 @@
         </div>
         <div class="mt-8">
           <h2 class="font-sans text-2xl text-white font-bold">Today's Highlights</h2>
-          <div class="grid grid-cols-2 gap-12 mt-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 mt-4">
             <WindCard
               :speed="todayWeatherData.wind_speed"
               :direction="todayWeatherData.wind_direction_compass"

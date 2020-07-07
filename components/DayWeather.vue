@@ -2,14 +2,7 @@
   <div class="w-40 flex flex-col p-5 bg-blue-500 items-center justify-between">
     <h5 class="font-sans text-base text-white" data-test="date">{{actualDate}}</h5>
     <div class="flex-shrink-0 mt-1">
-      <transition name="test">
-        <img
-          :src="require(`@/assets/images/${image}`)"
-          :key="image"
-          alt="image"
-          class="w-20 h-auto"
-        />
-      </transition>
+      <img :src="require(`@/assets/images/${image}`)" :key="image" alt="image" class="w-20 h-auto" />
     </div>
     <div class="mt-8 flex flex-row justify-between w-full px-2">
       <span class="font-sans text-base text-white" data-test="maxtemp">{{displayedMaxTemp}}</span>

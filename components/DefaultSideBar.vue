@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-blue-500 flex flex-col">
-    <div class="flex justify-between p-12">
+  <div class="bg-blue-500 flex flex-col pb-24 sm:pb-0">
+    <div class="flex justify-between p-6 sm:p-12">
       <button
         class="bg-gray-700 font-sans text-base text-white py-2 px-5"
         @click.prevent="$emit('search-start')"
@@ -31,17 +31,17 @@
         />
       </transition>
     </div>
-    <div class="mx-auto my-5">
+    <div class="mx-auto sm:my-5">
       <span class="font-sans text-9xl text-white font-medium">{{displayedTodayTemp}}</span>
       <span class="font-sans text-5xl text-gray-500 font-medium">°{{fahrenheitToggle ? "F" : "C"}}</span>
     </div>
-    <div class="mx-auto my-5 font-sans text-4xl text-gray-500 font-semibold">{{weatherName}}</div>
-    <div class="mx-auto mt-16">
+    <div class="mx-auto sm:my-5 font-sans text-4xl text-gray-500 font-semibold">{{weatherName}}</div>
+    <div class="mx-auto mt-8 sm:mt-16">
       <span class="font-sans text-lg text-gray-600 font-medium">Today</span>
       <span class="font-sans text-lg text-gray-600 font-medium mx-2">•</span>
       <span class="font-sans text-lg text-gray-600 font-medium">{{todayDate}}</span>
     </div>
-    <div class="mx-auto mt-8 flex">
+    <div class="mx-auto mt-4 sm:mt-8 flex">
       <span class="mr-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
