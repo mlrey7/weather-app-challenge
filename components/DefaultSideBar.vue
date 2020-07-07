@@ -6,7 +6,7 @@
         @click.prevent="$emit('search-start')"
       >Search for places</button>
       <button
-        class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center"
+        class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center focus:outline-none"
         @click.prevent="$emit('get-user-location')"
       >
         <svg
@@ -22,7 +22,14 @@
       </button>
     </div>
     <div :class="$style.bg" class="flex items-center justify-center">
-      <img :src="require(`@/assets/images/${image}`)" alt="shower" :class="$style.thumbnail" />
+      <transition name="fade" mode="out-in">
+        <img
+          :src="require(`@/assets/images/${image}`)"
+          :key="image"
+          alt="image"
+          :class="$style.thumbnail"
+        />
+      </transition>
     </div>
     <div class="mx-auto my-5">
       <span class="font-sans text-9xl text-white font-medium">{{displayedTodayTemp}}</span>

@@ -2,7 +2,14 @@
   <div class="w-40 flex flex-col p-5 bg-blue-500 items-center justify-between">
     <h5 class="font-sans text-base text-white" data-test="date">{{actualDate}}</h5>
     <div class="flex-shrink-0 mt-1">
-      <img :src="require(`@/assets/images/${image}`)" alt="Clear" class="w-20 h-auto" />
+      <transition name="test" mode="out-in">
+        <img
+          :src="require(`@/assets/images/${image}`)"
+          :key="image"
+          alt="image"
+          class="w-20 h-auto"
+        />
+      </transition>
     </div>
     <div class="mt-8 flex flex-row justify-between w-full px-2">
       <span class="font-sans text-base text-white" data-test="maxtemp">{{displayedMaxTemp}}</span>
@@ -116,3 +123,15 @@ export default {
   }
 };
 </script>
+
+<style>
+.test-enter-active,
+.test-leave-active {
+  transition: all 2s ease;
+}
+.test-enter,
+.test-leave-to {
+  opacity: 0;
+  transform: translateX(10px);
+}
+</style>
