@@ -2,7 +2,7 @@
   <div class="w-40 flex flex-col p-5 bg-blue-500 items-center justify-between">
     <h5 class="font-sans text-base text-white" data-test="date">{{actualDate}}</h5>
     <div class="flex-shrink-0 mt-1">
-      <transition name="test" mode="out-in">
+      <transition name="test">
         <img
           :src="require(`@/assets/images/${image}`)"
           :key="image"
@@ -132,6 +132,5 @@ export default {
 .test-enter,
 .test-leave-to {
   opacity: 0;
-  transform: translateX(10px);
 }
 </style>
