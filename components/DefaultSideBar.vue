@@ -5,7 +5,10 @@
         class="bg-gray-700 font-sans text-base text-white py-2 px-5"
         @click.prevent="$emit('search-start')"
       >Search for places</button>
-      <button class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center">
+      <button
+        class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center"
+        @click.prevent="$emit('get-user-location')"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

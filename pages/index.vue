@@ -7,6 +7,8 @@
           v-bind="sideBarProps"
           @search-start="search = true"
           @search-exit="search = false"
+          @change-city="changeCity"
+          @get-user-location="getUserLocation"
         />
       </transition>
       <div class="col-start-5 col-span-7 p-10">
@@ -108,12 +110,45 @@ export default {
   },
   async asyncData() {
     const { data } = await axios.get(
-      "https://www.metaweather.com/api/location/1199477/"
+      "https://meta-weather.now.sh/api/location/1199477/"
     );
     return {
       weatherData: data.consolidated_weather,
       city: data.title
     };
+  },
+  methods: {
+    async changeCity(woeid) {
+      const { data } = await axios.get(
+        `https://meta-weather.now.sh/api/location/${woeid}/`
+      );
+
+      this.weatherData = data.consolidated_weather;
+      this.city = data.title;
+    },
+    async fetchWeatherFromCoord(latitude, longitude) {
+      const { data } = await axios.get(
+        `https://meta-weather.now.sh/api/location/search/?lattlong=${latitude},${longitude}`
+      );
+      if (data.length) {
+        await this.changeCity(data[0].woeid);
+      }
+    },
+    getUserLocation() {
+      if (!navigator.geolocation) return;
+      else {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const lat = position.coords.latitude;
+            const long = position.coords.longitude;
+            this.fetchWeatherFromCoord(lat, long);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    }
   }
 };
 </script>

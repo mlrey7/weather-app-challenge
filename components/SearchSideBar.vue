@@ -15,7 +15,7 @@
       </button>
     </div>
     <div class="flex justify-between mt-8">
-      <form class="w-5/6">
+      <form class="w-full">
         <div class="flex border border-white p-3 align-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -28,34 +28,85 @@
             />
           </svg>
           <input
-            class="appearance-none w-full px-2 text-white leading-tight focus:outline-none border-none bg-blue-500"
+            class="appearance-none w-full px-2 text-white leading-tight focus:outline-none border-none bg-blue-500 bg-opacity-0"
             id="location"
             type="text"
             placeholder="search location"
+            @input="onSearchInput"
           />
         </div>
       </form>
-      <button
-        class="bg-indigo-500 font-sans text-base font-semibold text-white px-5 py-2 ml-5"
-      >Search</button>
     </div>
-    <div class="mt-6">
-      <SearchItem cityName="London" />
-      <SearchItem cityName="Barcelona" />
-      <SearchItem cityName="Long Beach" />
+    <div class="relative h-full">
+      <div class="mt-6 absolute inset-0 overflow-y-scroll sc">
+        <SearchItem
+          v-for="result in searchResults"
+          :key="result.woeid"
+          :cityName="result.title"
+          :woeid="result.woeid"
+          @change-city="onItemClick"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import SearchItem from "@/components/SearchItem";
+import { debounce } from "debounce";
+
 export default {
   name: "SearchSideBar",
   components: {
     SearchItem
+  },
+  data() {
+    return {
+      searchResults: []
+    };
+  },
+  methods: {
+    onSearchInput: debounce(async function(e) {
+      if (e.target.value === "") this.searchResults = [];
+      if (!e.target.value) return;
+
+      try {
+        const { data } = await this.$axios.get(
+          `https://meta-weather.now.sh/api/location/search/?query=${e.target.value}`
+        );
+        this.searchResults = data;
+      } catch (error) {
+        console.log(error);
+      }
+    }, 200),
+    onItemClick(woeid) {
+      this.$emit("change-city", woeid);
+      this.$emit("search-exit");
+    }
   }
 };
 </script>
 
 <style>
+.sc {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+.sc::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px theme("colors.blue.500") inset;
+  -webkit-text-fill-color: theme("colors.white");
+  caret-color: theme("colors.white");
+}
 </style>

@@ -3,6 +3,7 @@
     class="px-4 py-6 border border-blue-500 hover:border-gray-800 text-white font-medium flex justify-between w-full focus:outline-none"
     @mouseover="hover = true"
     @mouseout="hover = false"
+    @click.prevent="onClick"
   >
     {{cityName}}
     <span :class="hover ? '' : 'opacity-0'">
@@ -25,12 +26,21 @@ export default {
     cityName: {
       type: String,
       required: true
+    },
+    woeid: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       hover: false
     };
+  },
+  methods: {
+    onClick() {
+      this.$emit("change-city", this.woeid);
+    }
   }
 };
 </script>
