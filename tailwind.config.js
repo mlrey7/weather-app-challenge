@@ -10,29 +10,27 @@ module.exports = {
       sans: ["Raleway", "sans-serif"]
     },
     colors: {
-      white: "#E7E7EB"
+      white: "#E7E7EB",
+      blue: {
+        "400": "#585676",
+        "500": "#1E213A",
+        "600": "#100E1D",
+        "700": "#110E3C"
+      },
+      indigo: {
+        "500": "#3C47E9"
+      },
+      gray: {
+        "500": "#A09FB1",
+        "600": "#88869D",
+        "700": "#6E707A",
+        "800": "#616475"
+      },
+      yellow: {
+        "500": "#FFEC65"
+      }
     },
     extend: {
-      colors: {
-        blue: {
-          "400": "#585676",
-          "500": "#1E213A",
-          "600": "#100E1D",
-          "700": "#110E3C"
-        },
-        indigo: {
-          "500": "#3C47E9"
-        },
-        gray: {
-          "500": "#A09FB1",
-          "600": "#88869D",
-          "700": "#6E707A",
-          "800": "#616375"
-        },
-        yellow: {
-          "500": "#FFEC65"
-        }
-      },
       opacity: {
         "5": ".05"
       },
@@ -44,7 +42,12 @@ module.exports = {
       }
     }
   },
-  variants: {},
+  variants: {
+    opacity: ["responsive", "hover", "focus", "active"],
+    border: ["responsive", "hover", "focus", "active"],
+    borderColor: ["responsive", "hover", "focus", "active"],
+    borderWidth: ["responsive", "hover", "focus", "active"]
+  },
   plugins: [],
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
