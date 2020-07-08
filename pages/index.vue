@@ -29,8 +29,8 @@
             :maxTemp="weather.max_temp"
             :minTemp="weather.min_temp"
             :isFahrenheit="fahrenheitToggle"
-            v-for="weather in futureWeathers"
-            :key="weather.id"
+            v-for="(weather, index) in futureWeathers"
+            :key="index"
           />
         </div>
         <div class="mt-8">
