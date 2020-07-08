@@ -33,9 +33,8 @@ export default {
 
   computed: {
     barProgress() {
-      const humidityVal = (this.humidity / 100) * 14;
       return {
-        width: humidityVal + "rem"
+        width: this.humidity + "%"
       };
     }
   }
