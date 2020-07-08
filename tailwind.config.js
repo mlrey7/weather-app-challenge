@@ -39,6 +39,9 @@ module.exports = {
       },
       fontSize: {
         "9xl": "9rem"
+      },
+      maxWidth: {
+        xxs: "12rem"
       }
     }
   },

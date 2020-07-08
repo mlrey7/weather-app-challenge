@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-500 h-screen sm:h-auto flex flex-col px-6 py-6">
+  <div class="bg-blue-500 h-screen lg:h-auto flex flex-col px-6 py-6">
     <div class="flex justify-end">
       <button class="focus:outline-none" @click.prevent="$emit('search-exit')">
         <svg

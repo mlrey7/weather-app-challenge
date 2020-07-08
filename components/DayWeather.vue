@@ -1,19 +1,28 @@
 <template>
-  <div class="w-40 flex flex-col p-5 bg-blue-500 items-center justify-between">
-    <h5 class="font-sans text-base text-white" data-test="date">{{actualDate}}</h5>
+  <div class="flex flex-col p-5 bg-blue-500 items-center justify-between">
+    <h5
+      class="font-sans text-base lg:text-sm xl:text-base text-white"
+      data-test="date"
+    >{{actualDate}}</h5>
     <div class="flex-shrink-0 mt-1">
       <transition name="fade" mode="out-in">
         <img
           :src="require(`@/assets/images/${image}`)"
           :key="image"
           alt="image"
-          class="w-20 h-auto"
+          class="w-20 lg:w-16 xl:w-20 h-auto"
         />
       </transition>
     </div>
     <div class="mt-8 flex flex-row justify-between w-full px-2">
-      <span class="font-sans text-base text-white" data-test="maxtemp">{{displayedMaxTemp}}</span>
-      <span class="font-sans text-base text-gray-500" data-test="mintemp">{{displayedMinTemp}}</span>
+      <span
+        class="font-sans text-base lg:text-sm xl:text-base text-white"
+        data-test="maxtemp"
+      >{{displayedMaxTemp}}</span>
+      <span
+        class="font-sans text-base lg:text-sm xl:text-base text-gray-500"
+        data-test="mintemp"
+      >{{displayedMinTemp}}</span>
     </div>
   </div>
 </template>

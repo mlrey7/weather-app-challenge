@@ -1,18 +1,18 @@
 <template>
-  <div class="bg-blue-500 flex flex-col pb-24 sm:pb-0">
-    <div class="flex justify-between p-6 sm:p-12">
+  <div class="bg-blue-500 flex flex-col pb-24 lg:pb-0">
+    <div class="flex justify-between py-6 px-12 xl:p-12">
       <button
-        class="bg-gray-700 font-sans text-base text-white py-2 px-5"
+        class="bg-gray-700 font-sans text-base lg:text-xs xl:text-base text-white py-2 px-5 lg:px-3 xl:px-5"
         @click.prevent="$emit('search-start')"
       >Search for places</button>
       <button
-        class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center focus:outline-none"
+        class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center focus:outline-none lg:ml-8"
         @click.prevent="$emit('get-user-location')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          class="fill-current text-white h-6 w-6"
+          class="fill-current text-white h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6"
         >
           <path d="M0 0h24v24H0z" fill="none" />
           <path
@@ -27,26 +27,34 @@
           :src="require(`@/assets/images/${image}`)"
           :key="image"
           alt="image"
-          :class="$style.thumbnail"
+          class="lg:h-full max-w-xxs object-cover w-full lg:w-1/2 xl:w-full h-auto"
         />
       </transition>
     </div>
-    <div class="mx-auto sm:my-5">
-      <span class="font-sans text-9xl text-white font-medium">{{displayedTodayTemp}}</span>
-      <span class="font-sans text-5xl text-gray-500 font-medium">°{{fahrenheitToggle ? "F" : "C"}}</span>
+    <div class="mx-auto lg:my-5">
+      <span
+        class="font-sans text-9xl lg:text-6xl xl:text-9xl text-white font-medium"
+      >{{displayedTodayTemp}}</span>
+      <span
+        class="font-sans text-5xl lg:text-3xl xl:text-5xl text-gray-500 font-medium"
+      >°{{fahrenheitToggle ? "F" : "C"}}</span>
     </div>
-    <div class="mx-auto sm:my-5 font-sans text-4xl text-gray-500 font-semibold">{{weatherName}}</div>
-    <div class="mx-auto mt-8 sm:mt-16">
-      <span class="font-sans text-lg text-gray-600 font-medium">Today</span>
-      <span class="font-sans text-lg text-gray-600 font-medium mx-2">•</span>
-      <span class="font-sans text-lg text-gray-600 font-medium">{{todayDate}}</span>
+    <div
+      class="mx-auto lg:my-5 font-sans text-4xl lg:text-2xl xl:text-4xl text-gray-500 font-semibold"
+    >{{weatherName}}</div>
+    <div class="mx-auto mt-8 lg:mt-16">
+      <span class="font-sans text-lg lg:text-base xl:text-lg text-gray-600 font-medium">Today</span>
+      <span class="font-sans text-lg lg:text-base xl:text-lg text-gray-600 font-medium mx-2">•</span>
+      <span
+        class="font-sans text-lg lg:text-base xl:text-lg text-gray-600 font-medium"
+      >{{todayDate}}</span>
     </div>
-    <div class="mx-auto mt-4 sm:mt-8 flex">
+    <div class="mx-auto mt-4 lg:mt-8 flex align-bottom">
       <span class="mr-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          class="text-gray-600 fill-current h-6 w-6"
+          class="text-gray-600 fill-current h-6 w-6 lg:h-5 lg:w-5 xl:h-6 xl:w-6"
         >
           <path d="M0 0h24v24H0z" fill="none" />
           <path
@@ -54,7 +62,9 @@
           />
         </svg>
       </span>
-      <span class="font-sans text-lg text-gray-600 font-semibold">{{cityName}}</span>
+      <span
+        class="font-sans text-lg lg:text-base xl:text-lg text-gray-600 font-semibold"
+      >{{cityName}}</span>
     </div>
   </div>
 </template>
@@ -139,9 +149,5 @@ export default {
 .bg {
   background-image: url("../assets/images/Cloud-background.png");
   background-size: contain;
-}
-.thumbnail {
-  @apply object-cover w-full h-auto;
-  max-width: 200px;
 }
 </style>
