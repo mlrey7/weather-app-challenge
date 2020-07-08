@@ -1,14 +1,16 @@
 <template>
   <div class>
     <div class="sm:grid sm:grid-cols-12 sm:gap-8 sm:min-h-screen">
-      <component
-        :is="search ? 'SearchSideBar' : 'DefaultSideBar'"
-        v-bind="sideBarProps"
-        @search-start="search = true"
-        @search-exit="search = false"
-        @change-city="changeCity"
-        @get-user-location="getUserLocation"
-      />
+      <keep-alive>
+        <component
+          :is="search ? 'SearchSideBar' : 'DefaultSideBar'"
+          v-bind="sideBarProps"
+          @search-start="search = true"
+          @search-exit="search = false"
+          @change-city="changeCity"
+          @get-user-location="getUserLocation"
+        />
+      </keep-alive>
       <div class="col-start-5 col-span-7 p-10">
         <div class="hidden sm:flex sm:flex-row justify-end mb-16">
           <button
