@@ -1,56 +1,57 @@
 <template>
-  <div class>
-    <div class="lg:grid lg:grid-cols-12 lg:gap-8 lg:min-h-screen">
-      <keep-alive>
-        <component
-          :is="search ? 'SearchSideBar' : 'DefaultSideBar'"
-          v-bind="sideBarProps"
-          @search-start="search = true"
-          @search-exit="search = false"
-          @change-city="changeCity"
-          @get-user-location="getUserLocation"
-          class="lg:fixed lg:inset-y-0 xl:static xl:inset-auto"
+  <div class="lg:grid lg:grid-cols-12 lg:gap-8 lg:min-h-screen">
+    <keep-alive>
+      <component
+        :is="search ? 'SearchSideBar' : 'DefaultSideBar'"
+        v-bind="sideBarProps"
+        @search-start="search = true"
+        @search-exit="search = false"
+        @change-city="changeCity"
+        @get-user-location="getUserLocation"
+        class="lg:fixed lg:inset-y-0"
+      />
+    </keep-alive>
+    <div
+      class="col-start-5 lg:col-start-5 xl:col-start-5 col-span-7 lg:col-span-8 xl:col-span-7 p-10"
+    >
+      <div class="hidden lg:flex lg:flex-row justify-end lg:mb-10 xl:mb-16">
+        <button
+          class="rounded-full w-10 h-10 flex items-center justify-center focus:outline-none mr-2 font-sans text-lg font-bold"
+          @click.prevent="fahrenheitToggle = false"
+          :class="fahrenheitToggle ? 'bg-blue-400 text-white' : 'bg-white text-blue-700'"
+        >°C</button>
+        <button
+          class="rounded-full w-10 h-10 flex items-center justify-center focus:outline-none font-sans text-lg font-bold"
+          @click.prevent="fahrenheitToggle = true"
+          :class="fahrenheitToggle ? 'bg-white text-blue-700' : 'bg-blue-400 text-white'"
+        >°F</button>
+      </div>
+      <div class="grid grid-cols-2 gap-8 lg:grid-cols-5">
+        <DayWeather
+          :date="weather.applicable_date"
+          :weatherStateName="weather.weather_state_name"
+          :maxTemp="weather.max_temp"
+          :minTemp="weather.min_temp"
+          :isFahrenheit="fahrenheitToggle"
+          v-for="(weather, index) in futureWeathers"
+          :key="index"
         />
-      </keep-alive>
-      <div
-        class="col-start-5 lg:col-start-5 xl:col-start-5 col-span-7 lg:col-span-8 xl:col-span-7 p-10"
-      >
-        <div class="hidden lg:flex lg:flex-row justify-end lg:mb-10 xl:mb-16">
-          <button
-            class="rounded-full w-10 h-10 flex items-center justify-center focus:outline-none mr-2 font-sans text-lg font-bold"
-            @click.prevent="fahrenheitToggle = false"
-            :class="fahrenheitToggle ? 'bg-blue-400 text-white' : 'bg-white text-blue-700'"
-          >°C</button>
-          <button
-            class="rounded-full w-10 h-10 flex items-center justify-center focus:outline-none font-sans text-lg font-bold"
-            @click.prevent="fahrenheitToggle = true"
-            :class="fahrenheitToggle ? 'bg-white text-blue-700' : 'bg-blue-400 text-white'"
-          >°F</button>
-        </div>
-        <div class="grid grid-cols-2 gap-8 lg:grid-cols-5">
-          <DayWeather
-            :date="weather.applicable_date"
-            :weatherStateName="weather.weather_state_name"
-            :maxTemp="weather.max_temp"
-            :minTemp="weather.min_temp"
-            :isFahrenheit="fahrenheitToggle"
-            v-for="(weather, index) in futureWeathers"
-            :key="index"
+      </div>
+      <div class="mt-8">
+        <h2 class="font-sans text-2xl text-white font-bold">Today's Highlights</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 xl:gap-12 mt-4">
+          <WindCard
+            :speed="todayWeatherData.wind_speed"
+            :direction="todayWeatherData.wind_direction_compass"
           />
-        </div>
-        <div class="mt-8">
-          <h2 class="font-sans text-2xl text-white font-bold">Today's Highlights</h2>
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 xl:gap-12 mt-4">
-            <WindCard
-              :speed="todayWeatherData.wind_speed"
-              :direction="todayWeatherData.wind_direction_compass"
-            />
-            <HumidityCard :humidity="todayWeatherData.humidity" />
-            <VisibilityCard :visibility="todayWeatherData.visibility" />
-            <PressureCard :pressure="todayWeatherData.air_pressure" />
-          </div>
+          <HumidityCard :humidity="todayWeatherData.humidity" />
+          <VisibilityCard :visibility="todayWeatherData.visibility" />
+          <PressureCard :pressure="todayWeatherData.air_pressure" />
         </div>
       </div>
+      <div
+        class="mt-10 font-semibold text-gray-800 text-sm flex justify-center"
+      >Matthew Lemuel Rey @DevChallenges.io</div>
     </div>
   </div>
 </template>
