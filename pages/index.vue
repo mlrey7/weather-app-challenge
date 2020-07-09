@@ -8,13 +8,13 @@
         @search-exit="search = false"
         @change-city="changeCity"
         @get-user-location="getUserLocation"
-        class="lg:fixed lg:inset-y-0"
+        class="lg:fixed lg:inset-y-0 900p:w-3/12"
       />
     </keep-alive>
     <div
-      class="col-start-5 lg:col-start-5 xl:col-start-5 col-span-7 lg:col-span-8 xl:col-span-7 p-10"
+      class="col-start-5 lg:col-start-5 900p:col-start-5 col-span-7 lg:col-span-8 900p:col-span-7 p-10"
     >
-      <div class="hidden lg:flex lg:flex-row justify-end lg:mb-10 xl:mb-16">
+      <div class="hidden lg:flex lg:flex-row justify-end lg:mb-10 900p:mb-16">
         <button
           class="rounded-full w-10 h-10 flex items-center justify-center focus:outline-none mr-2 font-sans text-lg font-bold"
           @click.prevent="fahrenheitToggle = false"
@@ -39,7 +39,7 @@
       </div>
       <div class="mt-8">
         <h2 class="font-sans text-2xl text-white font-bold">Today's Highlights</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 xl:gap-12 mt-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 900p:gap-12 mt-4">
           <WindCard
             :speed="todayWeatherData.wind_speed"
             :direction="todayWeatherData.wind_direction_compass"
@@ -100,12 +100,12 @@ export default {
     sideBarProps() {
       if (this.search) {
         return {
-          class: "lg:col-span-4 xl:col-span-3",
+          class: "lg:col-span-3 900p:col-span-3",
           initialCityList: this.initialCityList
         };
       } else {
         return {
-          class: "lg:col-span-4 xl:col-span-3",
+          class: "lg:col-span-3 900p:col-span-3",
           cityName: this.city,
           weatherStateName: this.todayWeatherData.weather_state_name,
           fahrenheitToggle: this.fahrenheitToggle,
