@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-blue-500 h-screen lg:h-auto flex flex-col px-6 py-6">
+  <div class="bg-blue-500 h-screen lg:h-auto flex flex-col px-6 py-6 xl:px-12">
     <div class="flex justify-end">
       <button class="focus:outline-none" @click.prevent="$emit('search-exit')">
         <svg
@@ -33,6 +33,7 @@
             type="text"
             placeholder="search location"
             @input="onSearchInput"
+            v-model="searchText"
           />
         </div>
       </form>
@@ -60,9 +61,15 @@ export default {
   components: {
     SearchItem
   },
+  props: {
+    initialCityList: {
+      type: Array
+    }
+  },
   data() {
     return {
-      searchResults: []
+      searchResults: this.initialCityList ?? [],
+      searchText: ""
     };
   },
   methods: {
@@ -82,6 +89,7 @@ export default {
     onItemClick(woeid) {
       this.$emit("change-city", woeid);
       this.$emit("search-exit");
+      this.searchText = "";
     }
   }
 };

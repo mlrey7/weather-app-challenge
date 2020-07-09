@@ -41,7 +41,7 @@
     </div>
     <div
       class="mx-auto lg:my-5 font-sans text-4xl lg:text-2xl xl:text-4xl text-gray-500 font-semibold"
-    >{{weatherName}}</div>
+    >{{weatherStateName}}</div>
     <div class="mx-auto mt-8 lg:mt-16">
       <span class="font-sans text-lg lg:text-base xl:text-lg text-gray-600 font-medium">Today</span>
       <span class="font-sans text-lg lg:text-base xl:text-lg text-gray-600 font-medium mx-2">•</span>
@@ -77,7 +77,7 @@ export default {
       type: String,
       required: "true"
     },
-    weatherName: {
+    weatherStateName: {
       type: String,
       required: "true"
     },
@@ -105,7 +105,7 @@ export default {
     },
     image() {
       let url;
-      switch (this.weatherName) {
+      switch (this.weatherStateName) {
         case "Showers":
           url = "Shower.png";
           break;

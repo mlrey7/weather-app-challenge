@@ -81,7 +81,8 @@ export default {
       weatherData: [],
       city: "",
       fahrenheitToggle: false,
-      search: false
+      search: false,
+      initialCityList: []
     };
   },
   computed: {
@@ -99,13 +100,14 @@ export default {
     sideBarProps() {
       if (this.search) {
         return {
-          class: "lg:col-span-4 xl:col-span-3"
+          class: "lg:col-span-4 xl:col-span-3",
+          initialCityList: this.initialCityList
         };
       } else {
         return {
           class: "lg:col-span-4 xl:col-span-3",
           cityName: this.city,
-          weatherName: this.todayWeatherData.weather_state_name,
+          weatherStateName: this.todayWeatherData.weather_state_name,
           fahrenheitToggle: this.fahrenheitToggle,
           temperature: this.todayWeatherData.the_temp
         };
@@ -121,6 +123,24 @@ export default {
       city: data.title
     };
   },
+  mounted() {
+    if (!navigator?.geolocation) return;
+    else {
+      navigator.geolocation.getCurrentPosition(
+        async position => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          const data = await this.fetchCitiesFromCoord(latitude, longitude);
+          this.initialCityList = data;
+          await this.changeCity(data[0].woeid);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  },
   methods: {
     async changeCity(woeid) {
       const { data } = await axios.get(
@@ -130,22 +150,21 @@ export default {
       this.weatherData = data.consolidated_weather;
       this.city = data.title;
     },
-    async fetchWeatherFromCoord(latitude, longitude) {
+    async fetchCitiesFromCoord(latitude, longitude) {
       const { data } = await axios.get(
         `https://meta-weather.now.sh/api/location/search/?lattlong=${latitude},${longitude}`
       );
-      if (data.length) {
-        await this.changeCity(data[0].woeid);
-      }
+      return data;
     },
     getUserLocation() {
-      if (!navigator.geolocation) return;
+      if (!navigator?.geolocation) return;
       else {
         navigator.geolocation.getCurrentPosition(
-          position => {
-            const lat = position.coords.latitude;
-            const long = position.coords.longitude;
-            this.fetchWeatherFromCoord(lat, long);
+          async position => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const data = await this.fetchCitiesFromCoord(latitude, longitude);
+            await this.changeCity(data[0].woeid);
           },
           error => {
             console.log(error);
