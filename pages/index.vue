@@ -7,7 +7,7 @@
         @search-start="search = true"
         @search-exit="search = false"
         @change-city="changeCity"
-        @get-user-location="getUserLocation"
+        @get-user-location="getUserLocationFromGPS"
         class="lg:fixed lg:inset-y-0 900p:w-3/12"
       />
     </keep-alive>
@@ -114,32 +114,79 @@ export default {
       }
     }
   },
-  async asyncData() {
-    const { data } = await axios.get(
-      "https://meta-weather.now.sh/api/location/1199477/"
-    );
-    return {
-      weatherData: data.consolidated_weather,
-      city: data.title
-    };
+  async asyncData({ req, res }) {
+    if (process.server) {
+      // console.log("serverSide asyncData");
+      // console.log(req);
+      const ip =
+        req.headers["x-forwarded-for"] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        (req.connection.socket ? req.connection.socket.remoteAddress : null);
+
+      console.log(ip);
+      try {
+        const { data } = await axios.get(
+          `https://geolocation-db.com/json/${process.env.GEOLOCATION_KEY}/${ip}`
+        );
+
+        const cityData = await axios.get(
+          `https://meta-weather.now.sh/api/location/search/?lattlong=${data.latitude},${data.longitude}`
+        );
+
+        const weatherData = await axios.get(
+          `https://meta-weather.now.sh/api/location/${cityData.data[0].woeid}/`
+        );
+
+        return {
+          initialCityList: cityData.data,
+          weatherData: weatherData.data.consolidated_weather,
+          city: weatherData.data.title
+        };
+      } catch (error) {
+        // console.log("serverSide asyncData error", error);
+        const { data } = await axios.get(
+          "https://meta-weather.now.sh/api/location/2487956/" //ph 1199477
+        );
+        return {
+          weatherData: data.consolidated_weather,
+          city: data.title
+        };
+      }
+    } else {
+      try {
+        // console.log("clientside asyncData");
+        const { data } = await axios.get(
+          `https://geolocation-db.com/json/${process.env.GEOLOCATION_KEY}`
+        );
+
+        const cityData = await axios.get(
+          `https://meta-weather.now.sh/api/location/search/?lattlong=${data.latitude},${data.longitude}`
+        );
+
+        const weatherData = await axios.get(
+          `https://meta-weather.now.sh/api/location/${cityData.data[0].woeid}/`
+        );
+
+        return {
+          initialCityList: cityData.data,
+          weatherData: weatherData.data.consolidated_weather,
+          city: weatherData.data.title
+        };
+      } catch (error) {
+        //console.log(error, "clientside asyncData");
+        const { data } = await axios.get(
+          "https://meta-weather.now.sh/api/location/2487956/" //ph 1199477
+        );
+        return {
+          weatherData: data.consolidated_weather,
+          city: data.title
+        };
+      }
+    }
   },
   mounted() {
-    if (!navigator?.geolocation) return;
-    else {
-      navigator.geolocation.getCurrentPosition(
-        async position => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-
-          const data = await this.fetchCitiesFromCoord(latitude, longitude);
-          this.initialCityList = data;
-          await this.changeCity(data[0].woeid);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
+    // this.getUserLocationFromIp();
   },
   methods: {
     async changeCity(woeid) {
@@ -156,20 +203,40 @@ export default {
       );
       return data;
     },
-    getUserLocation() {
+    getUserLocationFromGPS() {
       if (!navigator?.geolocation) return;
       else {
         navigator.geolocation.getCurrentPosition(
           async position => {
             const latitude = position.coords.latitude;
             const longitude = position.coords.longitude;
+
             const data = await this.fetchCitiesFromCoord(latitude, longitude);
+            this.initialCityList = data;
             await this.changeCity(data[0].woeid);
           },
           error => {
             console.log(error);
           }
         );
+      }
+    },
+    async getUserLocationFromIp() {
+      try {
+        // console.log(process.env.GEOLOCATION_KEY);
+        const { data } = await axios.get(
+          `https://geolocation-db.com/json/${process.env.GEOLOCATION_KEY}`
+        );
+
+        const citiesData = await this.fetchCitiesFromCoord(
+          data.latitude,
+          data.longitude
+        );
+
+        this.initialCityList = citiesData;
+        await this.changeCity(citiesData[0].woeid);
+      } catch (error) {
+        console.log(error);
       }
     }
   }

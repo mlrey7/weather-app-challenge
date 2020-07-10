@@ -6,6 +6,7 @@
         @click.prevent="$emit('search-start')"
       >Search for places</button>
       <button
+        aria-label="Get Location with GPS"
         class="rounded-full w-10 h-10 bg-gray-700 flex items-center justify-center focus:outline-none lg:ml-8"
         @click.prevent="$emit('get-user-location')"
       >

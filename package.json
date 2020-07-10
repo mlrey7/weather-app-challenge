@@ -13,7 +13,8 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.11.0",
     "debounce": "^1.2.0",
-    "nuxt": "^2.13.0"
+    "nuxt": "^2.13.0",
+    "vue-jsonp": "^0.1.8"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^2.0.0",
